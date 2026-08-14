@@ -42,7 +42,7 @@ function InputForm({ onSave }: { onSave: (text: string, inputNumber: string, tar
     <div>
       <input type="text" placeholder="目標を入力してください" value={inputText} onChange={(e) => setInputText(e.target.value)} />
       <input type="number" placeholder="1日の目標回答数を入力してください" value={inputNumber} onChange={(e) => setInputNumber(e.target.value)} />
-      <select value={targetType} onChange={(e) => setTargetType(e.target.value as GoalType)}>
+      <select value={targetType} onChange={(e) => handleTypeChange(e.target.value as GoalType)}>
         <option value="count">回答数</option>
         <option value="rate">正答率</option>
       </select>
@@ -170,7 +170,6 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
           const dateString = formatDate(date);
           const record = getRecordForDate(dateString);
           if (record) {
-            const answerOk = isAnswerAchieved(record);
             const accuracyOk = isAccuracyAchieved(record);
 
             return (
