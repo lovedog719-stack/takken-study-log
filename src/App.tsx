@@ -163,6 +163,17 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
     onBack();
   };
 
+  const handleDeleteDailyRecord = (targetDate: string) => {
+    const updateDailyRecords = dailyRecords.filter(record => record.date !== targetDate);
+    setGoal?.({
+      targetText,
+      targetNumber,
+      dailyRecords: updateDailyRecords,
+      targetType,
+      targetValue,
+    });
+  }
+
   const handleAddRecord = () => {
     if (!date.trim() || !answerCount.trim() || !correctCount.trim()) {
       alert("すべての項目を入力してください");
@@ -272,6 +283,7 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
             <p>回答数：{record.answerCount}</p>
             <p>正解数：{record.correctCount}</p>
             <p>正答率：{((parseInt(record.correctCount) || 0) / (parseInt(record.answerCount) || 0) * 100).toFixed(2)}%</p>
+            <button onClick={() => handleDeleteDailyRecord(record.date)}>この日のデータを削除</button>
           </li>
         ))}
       </ul>
