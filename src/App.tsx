@@ -235,7 +235,9 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
       <input type="number" placeholder="正解数" value={correctCount} onChange={(e) => setCorrectCount(e.target.value)} />
 
       <button onClick={handleAddRecord}>追加</button>
-      <button onClick={() => handleDeleteDailyRecord(date)}>この日のデータを削除</button>
+      {date && getRecordForDate(date) && (
+        <button onClick={() => handleDeleteDailyRecord(date)}>この日のデータを削除</button>
+      )}
 
       <h2>カレンダー</h2>
       <Calendar
