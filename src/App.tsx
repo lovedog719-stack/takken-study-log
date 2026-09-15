@@ -4,6 +4,15 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { supabase } from './supabaseClient';
 import type { User } from '@supabase/supabase-js';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 
 type GoalType = 'count' | 'rate';
 
@@ -300,17 +309,27 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
         }}
       />
 
-      <h2>日別正答率</h2>
-      <ul>
-        {dailyRecords.map((record) => (
-          <li key={record.date}>
-            <p>日付：{record.date}</p>
-            <p>回答数：{record.answerCount}</p>
-            <p>正解数：{record.correctCount}</p>
-            <p>正答率：{((parseInt(record.correctCount) || 0) / (parseInt(record.answerCount) || 0) * 100).toFixed(2)}%</p>
-          </li>
-        ))}
-      </ul>
+      <h2>直近7日間の正答率推移</h2>
+      <div style={{ width: '100%', height: 250 }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={chartData}>
+            {/* 1. 薄いグリッド線 */}
+            <CartesianGrid strokeDasharray="3 3" />
+
+            {/* 2. 横軸：chartData の中のどの項目を表示するか（dataKey） */}
+            <XAxis dataKey="date" />
+
+            {/* 3. 縦軸：0%〜100% の範囲に固定する */}
+            <YAxis domain={[0, 100]} unit="%" />
+
+            {/* 4. ポップアップツールチップ */}
+            <Tooltip />
+
+            {/* 5. 折れ線：どの数値をプロットするか（dataKey="rate"） */}
+            <Line type="monotone" dataKey="rate" stroke="#8884d8" name="正答率" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
 
       <button onClick={onBack}>戻る</button>
       <button onClick={handleDelete}>目標を削除する</button>
