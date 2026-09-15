@@ -164,6 +164,7 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
   };
 
   const handleDeleteDailyRecord = (targetDate: string) => {
+    if (!window.confirm("本当に削除しますか？")) return;
     const updateDailyRecords = dailyRecords.filter(record => record.date !== targetDate);
     setGoal?.({
       targetText,
@@ -172,6 +173,9 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
       targetType,
       targetValue,
     });
+    setDate("");
+    setAnswerCount("");
+    setCorrectCount("");
   }
 
   const handleAddRecord = () => {
@@ -218,6 +222,24 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
   const getRecordForDate = (dateString: string): DailyRecord | null => {
     return dailyRecords.find((record) => record.date === dateString) || null;
   };
+
+  const chartData = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dateString = formatDate(d);
+    const record = getRecordForDate(dateString);
+    const answerCount = record ? parseInt(record.answerCount) : 0;
+    const correctCount = record ? parseInt(record.correctCount) : 0;
+    const rate = answerCount > 0 ? Math.round((correctCount / answerCount) * 100) : 0;
+    const achieved = targetType === 'count' ? answerCount >= parseInt(targetNumber) : rate >= parseInt(targetValue);
+    return {
+      date: dateString.slice(5),
+      answerCount,
+      correctCount,
+      rate,
+      achieved,
+    };
+  }).reverse();
 
   return (
     <div>
