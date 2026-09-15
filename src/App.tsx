@@ -144,7 +144,7 @@ function InputForm({ onSave }: { onSave: (text: string, inputNumber: string, tar
   );
 }
 
-function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecords, targetType, targetValue }: { setGoal: ((goal: GoalData | null) => void) | null, onBack: () => void, targetText: string; targetNumber: string; dailyRecords: DailyRecord[], targetType: GoalType, targetValue: string }) {
+function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecords, targetType, targetValue, createdAt, }: { setGoal: ((goal: GoalData | null) => void) | null, onBack: () => void, targetText: string; targetNumber: string; dailyRecords: DailyRecord[], targetType: GoalType, targetValue: string, createdAt: string }) {
   type PeriodRange = '7days' | '30days' | 'all';
   const [period, setPeriod] = useState<PeriodRange>('7days');
   const [date, setDate] = useState("");
@@ -235,7 +235,15 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
     return dailyRecords.find((record) => record.date === dateString) || null;
   };
 
-  const daysCount = period === '7days' ? 7 : period === '30days' ? 30 : 90;
+
+  const registeredDate = createdAt ? new Date(createdAt) : new Date();
+  const today = new Date();
+  const diffDays = Math.floor(
+    (today.setHours(0, 0, 0, 0) - registeredDate.setHours(0, 0, 0, 0)) / (1000 * 60 * 60 * 24)
+  ) + 1;
+  const allDays = Math.max(7, diffDays);
+
+  const daysCount = period === '7days' ? 7 : period === '30days' ? 30 : allDays;
   const chartData = Array.from({ length: daysCount }, (_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - i);
@@ -487,6 +495,7 @@ export default function MyApp() {
           dailyRecords={currentGoal.dailyRecords}
           targetType={currentGoal.targetType}
           targetValue={currentGoal.targetValue}
+          createdAt={user.created_at}
         />
       ) : null}
     </div>
