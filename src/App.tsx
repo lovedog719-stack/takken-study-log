@@ -145,6 +145,8 @@ function InputForm({ onSave }: { onSave: (text: string, inputNumber: string, tar
 }
 
 function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecords, targetType, targetValue }: { setGoal: ((goal: GoalData | null) => void) | null, onBack: () => void, targetText: string; targetNumber: string; dailyRecords: DailyRecord[], targetType: GoalType, targetValue: string }) {
+  type PeriodRange = '7days' | '30days' | 'all';
+  const [period, setPeriod] = useState<PeriodRange>('7days');
   const [date, setDate] = useState("");
   const [answerCount, setAnswerCount] = useState("");
   const [correctCount, setCorrectCount] = useState("");
@@ -233,7 +235,8 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
     return dailyRecords.find((record) => record.date === dateString) || null;
   };
 
-  const chartData = Array.from({ length: 7 }, (_, i) => {
+  const daysCount = period === '7days' ? 7 : period === '30days' ? 30 : 90;
+  const chartData = Array.from({ length: daysCount }, (_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const dateString = formatDate(d);
@@ -310,7 +313,24 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
         }}
       />
 
-      <h2>直近7日間の正答率推移</h2>
+      <h2>正答率推移</h2>
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+        <button
+          type="button"
+          onClick={() => setPeriod('7days')}
+          style={{ fontWeight: period === '7days' ? 'bold' : 'normal' }}
+        >直近7日間</button>
+        <button
+          type="button"
+          onClick={() => setPeriod('30days')}
+          style={{ fontWeight: period === '30days' ? 'bold' : 'normal' }}
+        >直近30日間</button>
+        <button
+          type="button"
+          onClick={() => setPeriod('all')}
+          style={{ fontWeight: period === 'all' ? 'bold' : 'normal' }}
+        >全期間</button>
+      </div>
       <div style={{ width: '100%', height: 250 }}>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData}>
