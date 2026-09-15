@@ -12,6 +12,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  ReferenceLine,
 } from 'recharts';
 
 type GoalType = 'count' | 'rate';
@@ -327,6 +328,15 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
 
             {/* 5. 折れ線：どの数値をプロットするか（dataKey="rate"） */}
             <Line type="monotone" dataKey="rate" stroke="#8884d8" name="正答率" />
+            {targetValue && (
+              <ReferenceLine
+                y={targetValue || 0}
+                stroke="green"
+                strokeWidth={2}
+                strokeDasharray="3 3"
+                label={{ value: `目標 ${targetValue}%`, position: 'insideTopRight' }}
+              />
+            )}
           </LineChart>
         </ResponsiveContainer>
       </div>
