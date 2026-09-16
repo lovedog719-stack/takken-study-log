@@ -293,6 +293,59 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
       )}
 
       <h2>カレンダー</h2>
+      {/* 👇 凡例（Legend） */}
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '12px',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: '10px 0 16px',
+        fontSize: '12px',
+        color: '#444',
+      }}>
+        {/* 目標回答数 達成 */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <span style={{
+            width: '14px',
+            height: '14px',
+            borderRadius: '3px',
+            backgroundColor: '#d4edda',
+            border: '1px solid #c3e6cb',
+          }} />
+          <span>目標回答数 達成</span>
+        </div>
+
+        {/* 目標回答数 未達 */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <span style={{
+            width: '14px',
+            height: '14px',
+            borderRadius: '3px',
+            backgroundColor: '#f8d7da',
+            border: '1px solid #f5c6cb',
+          }} />
+          <span>目標回答数 未達</span>
+        </div>
+
+        {/* 未実施 */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <span style={{
+            width: '14px',
+            height: '14px',
+            borderRadius: '3px',
+            backgroundColor: '#f0f0f0',
+            border: '1px solid #ddd',
+          }} />
+          <span>未実施（過去）</span>
+        </div>
+
+        {/* 目標正答率 達成バッジ */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <span>🏵️</span>
+          <span>目標正答率 達成</span>
+        </div>
+      </div>
       <Calendar
         tileClassName={({ date }: { date: Date }) => {
           const dateString = formatDate(date);
