@@ -362,9 +362,7 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
             {/* 正答率（折れ線）：左の縦軸を使用 */}
             <Line yAxisId="left" type="monotone" dataKey="rate" stroke="#8884d8" strokeWidth={2} name="正答率" />
 
-            {/* 5. 折れ線：どの数値をプロットするか（dataKey="rate"） */}
-
-            {/* 正答率目標ライン（左軸基準） */}
+            {/* 目標達成ライン（左軸基準） */}
             {targetType === 'rate' && targetValue && (
               <ReferenceLine
                 yAxisId="left"
