@@ -148,9 +148,33 @@ function InputForm({ onSave }: { onSave: (text: string, inputNumber: string, tar
 function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecords, targetType, targetValue, createdAt, }: { setGoal: ((goal: GoalData | null) => void) | null, onBack: () => void, targetText: string; targetNumber: string; dailyRecords: DailyRecord[], targetType: GoalType, targetValue: string, createdAt: string }) {
   type PeriodRange = '7days' | '30days' | 'all';
   const [period, setPeriod] = useState<PeriodRange>('7days');
-  const [date, setDate] = useState("");
+
+  const formatDate = (d: Date) => {
+    const year = String(d.getFullYear());
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const getRecordForDate = (dateString: string): DailyRecord | null => {
+    return dailyRecords.find((record) => record.date === dateString) || null;
+  };
+
+  const [date, setDate] = useState(() => formatDate(new Date()));
   const [answerCount, setAnswerCount] = useState("");
   const [correctCount, setCorrectCount] = useState("");
+
+  useEffect(() => {
+    const todayStr = formatDate(new Date());
+    const todayRecord = getRecordForDate(todayStr);
+    if (todayRecord) {
+      setAnswerCount(todayRecord.answerCount);
+      setCorrectCount(todayRecord.correctCount);
+    } else {
+      setAnswerCount("");
+      setCorrectCount("");
+    }
+  }, []);
 
   const isAnswerAchieved = (record: DailyRecord): boolean => {
     const currentAnswer = parseInt(record.answerCount) || 0;
@@ -221,22 +245,9 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
         targetValue,
       });
     }
-    setDate("");
     setAnswerCount("");
     setCorrectCount("");
   };
-
-  const formatDate = (d: Date) => {
-    const year = String(d.getFullYear());
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
-  const getRecordForDate = (dateString: string): DailyRecord | null => {
-    return dailyRecords.find((record) => record.date === dateString) || null;
-  };
-
 
   const registeredDate = createdAt ? new Date(createdAt) : new Date();
   const today = new Date();
