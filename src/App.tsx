@@ -172,6 +172,7 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
   };
 
   const handleDelete = () => {
+    if (!window.confirm("本当に削除しますか？")) return;
     setGoal?.(null);
     onBack();
   };
@@ -337,7 +338,7 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
             backgroundColor: '#f0f0f0',
             border: '1px solid #ddd',
           }} />
-          <span>未実施（過去）</span>
+          <span>未実施</span>
         </div>
 
         {/* 目標正答率 達成バッジ */}
