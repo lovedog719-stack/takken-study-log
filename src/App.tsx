@@ -385,17 +385,6 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
             {/* 正答率（折れ線）：左の縦軸を使用 */}
             <Line yAxisId="left" type="monotone" dataKey="rate" stroke="#8884d8" strokeWidth={2} name="正答率" />
 
-            {/* 目標達成ライン（左軸基準） */}
-            {targetType === 'rate' && targetValue && (
-              <ReferenceLine
-                yAxisId="left"
-                y={parseInt(targetValue) || 0}
-                stroke="green"
-                strokeWidth={2}
-                strokeDasharray="3 3"
-                label={{ value: `目標 ${targetValue}%`, position: 'insideTopLeft' }}
-              />
-            )}
           </ComposedChart>
         </ResponsiveContainer>
       </div>
