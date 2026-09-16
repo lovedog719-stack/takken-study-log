@@ -263,6 +263,15 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
     };
   }).reverse();
 
+  const targetRateNum = parseInt(targetValue) || 60;
+  const targetAnswerNum = parseInt(targetNumber) || 10;
+
+  const alignedMaxAnswer = Math.ceil((targetAnswerNum * 100) / targetRateNum);
+
+  const actualMaxAnswer = Math.max(...chartData.map(d => d.answerCount), 0);
+
+  const rightAxisMax = Math.max(alignedMaxAnswer, actualMaxAnswer);
+
   return (
     <div>
       <h1>目標達成状況</h1>
@@ -352,7 +361,21 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
             {/* 左の縦軸：正答率用（0〜100%） */}
             <YAxis yAxisId="left" domain={[0, 100]} unit="%" />
             {/* 右の縦軸：回答数用（右側に配置） */}
-            <YAxis yAxisId="right" orientation="right" allowDecimals={false} />
+            <YAxis yAxisId="right" orientation="right" domain={[0, rightAxisMax]} allowDecimals={false} />
+
+            <ReferenceLine
+              yAxisId="left"
+              y={targetRateNum}
+              stroke="#2e7d32"
+              strokeWidth={2}
+              strokeDasharray="4 4"
+              label={{
+                value: `目標: ${targetRateNum}% / ${targetAnswerNum}問`,
+                position: 'insideTopLeft',
+                fill: '#2e7d32',
+                fontSize: 12,
+              }}
+            />
 
             {/* 4. ポップアップツールチップ */}
             <Tooltip />
