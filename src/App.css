@@ -25,6 +25,16 @@
   color: #333333 !important;
 }
 
+.unachieved-day {
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
+}
+
+.missing-day {
+  background-color: #f0f0f0 !important;
+  color: #999999 !important;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
