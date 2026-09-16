@@ -297,9 +297,21 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
         tileClassName={({ date }: { date: Date }) => {
           const dateString = formatDate(date);
           const record = getRecordForDate(dateString);
-          if (record && isAnswerAchieved(record)) {
-            return 'achieved-day';
+
+          // 1. 記録がある場合
+          if (record) {
+            // 目標回答数を達成していれば緑、未達成なら赤
+            return isAnswerAchieved(record) ? 'achieved-day' : 'unachieved-day';
           }
+
+          // 2. 記録がない場合：過去日（昨日以前）ならグレーにする
+          const today = new Date();
+          today.setHours(0, 0, 0, 0); // 時間をリセットして日付単位で比較
+
+          if (date < today) {
+            return 'missing-day';
+          }
+
           return null;
         }}
         tileContent={({ date }: { date: Date }) => {
