@@ -5,8 +5,9 @@ import 'react-calendar/dist/Calendar.css';
 import { supabase } from './supabaseClient';
 import type { User } from '@supabase/supabase-js';
 import {
-  LineChart,
+  ComposedChart,
   Line,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -341,31 +342,40 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
       </div>
       <div style={{ width: '100%', height: 250 }}>
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData}>
+          <ComposedChart data={chartData}>
             {/* 1. 薄いグリッド線 */}
             <CartesianGrid strokeDasharray="3 3" />
 
             {/* 2. 横軸：chartData の中のどの項目を表示するか（dataKey） */}
             <XAxis dataKey="date" />
 
-            {/* 3. 縦軸：0%〜100% の範囲に固定する */}
-            <YAxis domain={[0, 100]} unit="%" />
+            {/* 左の縦軸：正答率用（0〜100%） */}
+            <YAxis yAxisId="left" domain={[0, 100]} unit="%" />
+            {/* 右の縦軸：回答数用（右側に配置） */}
+            <YAxis yAxisId="right" orientation="right" allowDecimals={false} />
 
             {/* 4. ポップアップツールチップ */}
             <Tooltip />
 
+            {/* 回答数（棒グラフ）：右の縦軸を使用 */}
+            <Bar yAxisId="right" dataKey="answerCount" fill="#82ca9d" name="回答数" />
+            {/* 正答率（折れ線）：左の縦軸を使用 */}
+            <Line yAxisId="left" type="monotone" dataKey="rate" stroke="#8884d8" strokeWidth={2} name="正答率" />
+
             {/* 5. 折れ線：どの数値をプロットするか（dataKey="rate"） */}
-            <Line type="monotone" dataKey="rate" stroke="#8884d8" name="正答率" />
-            {targetValue && (
+
+            {/* 正答率目標ライン（左軸基準） */}
+            {targetType === 'rate' && targetValue && (
               <ReferenceLine
-                y={targetValue || 0}
+                yAxisId="left"
+                y={parseInt(targetValue) || 0}
                 stroke="green"
                 strokeWidth={2}
                 strokeDasharray="3 3"
-                label={{ value: `目標 ${targetValue}%`, position: 'insideTopRight' }}
+                label={{ value: `目標 ${targetValue}%`, position: 'insideTopLeft' }}
               />
             )}
-          </LineChart>
+          </ComposedChart>
         </ResponsiveContainer>
       </div>
 
