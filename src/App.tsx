@@ -370,7 +370,7 @@ function ProgressScreen({ setGoal, onBack, targetText, targetNumber, dailyRecord
               strokeWidth={2}
               strokeDasharray="4 4"
               label={{
-                value: `目標: ${targetRateNum}% / ${targetAnswerNum}問`,
+                value: `目標: 回答数 ${targetAnswerNum}問 / 正答率 ${targetRateNum}%`,
                 position: 'insideTopLeft',
                 fill: '#2e7d32',
                 fontSize: 12,
