@@ -3,9 +3,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  color: #333;
+  background-color: #f8fafc;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -65,4 +65,126 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* ===== 追加: レスポンシブ＆UI調整 ===== */
+input, select, button {
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  
+  /* スマホでのカレンダーのはみ出し防止 */
+  .react-calendar {
+    width: 100% !important;
+    max-width: 100%;
+  }
+}
+
+/* カレンダー全体のスタイル微調整 */
+.react-calendar {
+  width: 100% !important;
+  max-width: 700px !important; /* デスクトップでも広めにとる */
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  overflow: hidden;
+  font-family: inherit !important;
+  margin: 0 auto;
+  padding: 8px; /* 全体に余白を追加 */
+}
+
+/* 曜日ヘッダーの調整 */
+.react-calendar__month-view__weekdays {
+  margin-bottom: 8px;
+}
+
+/* 日付エリアをグリッドにして隙間を作る */
+.react-calendar__month-view__days {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+/* 日付セル（タイル）の拡張 */
+.react-calendar__tile {
+  width: 100% !important; /* グリッドに合わせる */
+  height: 80px; /* 余分な余白を削って縦長感を解消 */
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 6px 1px !important;
+  border-radius: 8px;
+  border: 1px solid #eee !important; /* 未来日も含め、すべてのセルにベースの枠線を引く */
+  transition: background-color 0.2s, border-color 0.2s;
+  box-sizing: border-box;
+  position: relative !important; /* 絶対配置のバッジ用 */
+}
+
+/* 日付の数字部分 */
+.react-calendar__tile > abbr {
+  font-size: 16px; /* 日付を大きく */
+  font-weight: 600; /* 日付を太く */
+  margin-bottom: 2px;
+  color: #333;
+}
+
+/* 土曜日の色設定 */
+.react-calendar__tile.saturday-day > abbr {
+  color: #0066cc; /* 青色 */
+}
+
+/* 日曜日の色設定 */
+.react-calendar__tile.sunday-day > abbr {
+  color: #cc0000; /* 赤色 */
+}
+
+/* 完全達成日の星マーク（日付の右側に添える） */
+.react-calendar__tile.perfect-day > abbr::after {
+  content: "★";
+  color: #fbbf24;
+  font-size: 12px;
+  margin-left: 2px;
+  text-shadow: 0 0 3px rgba(251, 191, 36, 0.5);
+}
+
+/* 選択中の日のハイライト */
+.react-calendar__tile--active {
+  background-color: transparent !important; /* 実績の色を隠さないように透明にする */
+  box-shadow: inset 0 0 0 2px #0066cc !important; /* 青い枠線で選択中を表現 */
+  color: inherit !important;
+}
+
+/* 前月・次月の日付を全体的に薄くして目立たなくする */
+.react-calendar__month-view__days__day--neighboringMonth {
+  opacity: 0.35 !important;
+}
+
+/* TOPページの目標カード（登録済み） */
+.goal-card {
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  background-color: #f4f9ff !important;
+  border: 1px solid #b3d4ff !important;
+  color: #004499 !important;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.08) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.goal-card:hover {
+  background-color: #e6f2ff !important;
+  border-color: #80bfff !important;
+}
+
+/* TOPページの目標カード（未登録） */
+.goal-card-empty {
+  transition: background-color 0.2s ease;
+}
+
+.goal-card-empty:hover {
+  background-color: #f0f0f0 !important;
 }

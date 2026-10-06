@@ -1,7 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
 }
 
@@ -21,17 +21,20 @@
 }
 
 .achieved-day {
-  background-color: #84C98B !important;
+  background-color: #f0fdf4 !important;
+  border: 1px solid #bbf7d0 !important;
   color: #333333 !important;
 }
 
 .unachieved-day {
-  background-color: #f8d7da !important;
-  color: #721c24 !important;
+  background-color: #fef2f2 !important;
+  border: 1px solid #fecaca !important;
+  color: #333333 !important;
 }
 
 .missing-day {
-  background-color: #f0f0f0 !important;
+  background-color: #fafafa !important;
+  border: 1px solid #f5f5f5 !important;
   color: #999999 !important;
 }
 
