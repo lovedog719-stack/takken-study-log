@@ -492,9 +492,7 @@ function ProgressScreen({ slotId, setGoal, onBack, targetText, targetNumber, dai
                 const dateString = formatDate(date);
                 const record = getRecordForDate(dateString);
                 if (record) {
-                  const answerOk = isAnswerAchieved(record);
                   const accuracyOk = isAccuracyAchieved(record);
-                  const isPerfect = answerOk && accuracyOk;
 
                   return (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '2px', width: '100%', gap: '2px', padding: '0 2px', boxSizing: 'border-box' }}>
