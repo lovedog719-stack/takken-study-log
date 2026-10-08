@@ -32,7 +32,7 @@ type DailyRecord = {
   correctCount: string;
 };
 
-// --- ログイン・会員登録コンポーネント ---
+// -- ログイン・会員登録コンポーネント --
 function AuthScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -103,22 +103,22 @@ function AuthScreen() {
 function DataLabel({ label, onClick }: { label: string; onClick: () => void }) {
   const isNew = label === "新しい目標を登録する";
   return (
-    <button 
+    <button
       onClick={onClick}
       className={isNew ? 'goal-card-empty' : 'goal-card'}
-      style={{ 
-        display: 'block', 
-        width: '100%', 
-        maxWidth: '500px', 
-        margin: '0 auto 16px', 
-        padding: '24px 20px', 
-        background: isNew ? '#f8f9fa' : 'white', 
-        border: isNew ? '1px dashed #ccc' : '1px solid #e0e0e0', 
-        borderRadius: '12px', 
-        boxShadow: isNew ? 'none' : '0 4px 12px rgba(0,0,0,0.03)', 
-        color: isNew ? '#666' : '#333', 
-        fontSize: '16px', 
-        fontWeight: 'bold', 
+      style={{
+        display: 'block',
+        width: '100%',
+        maxWidth: '500px',
+        margin: '0 auto 16px',
+        padding: '24px 20px',
+        background: isNew ? '#f8f9fa' : 'white',
+        border: isNew ? '1px dashed #ccc' : '1px solid #e0e0e0',
+        borderRadius: '12px',
+        boxShadow: isNew ? 'none' : '0 4px 12px rgba(0,0,0,0.03)',
+        color: isNew ? '#666' : '#333',
+        fontSize: '16px',
+        fontWeight: 'bold',
         cursor: 'pointer',
         textAlign: 'center'
       }}
@@ -400,7 +400,7 @@ function ProgressScreen({ slotId, setGoal, onBack, targetText, targetNumber, dai
             <h3 style={{ fontSize: '16px', margin: '0 0 16px 0', color: '#0066cc', textAlign: 'left', borderBottom: '1px solid #eee', paddingBottom: '8px' }}>
               {date === formatDate(new Date()) ? '今日' : date} の記録
             </h3>
-            
+
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'flex-end', justifyContent: 'flex-start' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '12px', color: '#666', marginBottom: '4px', textAlign: 'left', fontWeight: 'bold' }}>日付</label>
@@ -485,7 +485,7 @@ function ProgressScreen({ slotId, setGoal, onBack, targetText, targetNumber, dai
                   today.setHours(0, 0, 0, 0);
                   if (date < today) classes.push('missing-day');
                 }
-                
+
                 return classes.length > 0 ? classes.join(' ') : null;
               }}
               tileContent={({ date }: { date: Date }) => {
@@ -590,15 +590,15 @@ function ProgressScreen({ slotId, setGoal, onBack, targetText, targetNumber, dai
   );
 }
 
-function ManageGoalListScreen({ slot1, slot2, slot3, onSelect, onBack }: { 
-  slot1: GoalData | null, slot2: GoalData | null, slot3: GoalData | null, 
-  onSelect: (slotNum: number) => void, 
-  onBack: () => void 
+function ManageGoalListScreen({ slot1, slot2, slot3, onSelect, onBack }: {
+  slot1: GoalData | null, slot2: GoalData | null, slot3: GoalData | null,
+  onSelect: (slotNum: number) => void,
+  onBack: () => void
 }) {
   return (
     <div style={{ padding: '20px', textAlign: 'center' }}>
       <h1 style={{ fontSize: '20px', color: '#333', marginBottom: '32px' }}>編集する目標データを選択</h1>
-      
+
       {slot1 === null && slot2 === null && slot3 === null && (
         <p style={{ color: '#666', marginBottom: '24px' }}>編集できる目標データがありません。</p>
       )}
@@ -779,20 +779,20 @@ export default function MyApp() {
     if (newPassword) updates.password = newPassword;
 
     if (Object.keys(updates).length === 0) {
-       setIsEditingAccount(false);
-       setIsUpdatingAccount(false);
-       return;
+      setIsEditingAccount(false);
+      setIsUpdatingAccount(false);
+      return;
     }
 
     const { error } = await supabase.auth.updateUser(updates);
     setIsUpdatingAccount(false);
 
     if (error) {
-       alert("登録情報の更新に失敗しました: " + error.message);
+      alert("登録情報の更新に失敗しました: " + error.message);
     } else {
-       alert("登録情報を更新しました。" + (updates.email ? " メールアドレスを変更した場合は、新しいメールアドレス宛に確認メールが送信されることがあります。" : ""));
-       setIsEditingAccount(false);
-       setNewPassword(''); // パスワードフィールドをクリア
+      alert("登録情報を更新しました。" + (updates.email ? " メールアドレスを変更した場合は、新しいメールアドレス宛に確認メールが送信されることがあります。" : ""));
+      setIsEditingAccount(false);
+      setNewPassword(''); // パスワードフィールドをクリア
     }
   };
 
@@ -815,149 +815,149 @@ export default function MyApp() {
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', position: 'relative' }}>
           <div>
-          <button onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: 0 }}>
-            <span style={{ fontSize: '14px', color: '#333', fontWeight: 'bold' }}>👤 {displayName} ▼</span>
-          </button>
+            <button onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: 0 }}>
+              <span style={{ fontSize: '14px', color: '#333', fontWeight: 'bold' }}>👤 {displayName} ▼</span>
+            </button>
 
-          {isUserMenuOpen && (
-            <>
-              {/* メニュー外をクリックした時に閉じるための透明な背景 */}
-              <div
-                style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9 }}
-                onClick={() => setIsUserMenuOpen(false)}
-              />
-              <div style={{ position: 'absolute', top: '100%', left: '0', background: 'white', border: '1px solid #ccc', borderRadius: '4px', padding: '10px', boxShadow: '0 2px 5px rgba(0,0,0,0.2)', zIndex: 10, display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '200px' }}>
-                {isEditingProfile ? (
-                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <input
-                    type="text"
-                    placeholder="表示名（任意）"
-                    value={newUsername}
-                    onChange={(e) => setNewUsername(e.target.value)}
-                    style={{ padding: '4px', fontSize: '12px', width: '100%', boxSizing: 'border-box' }}
-                  />
-                  <div style={{ display: 'flex', gap: '5px' }}>
-                    <button onClick={handleUpdateProfile} disabled={isUpdatingProfile} style={{ fontSize: '12px', padding: '4px 8px', flex: 1 }}>
-                      {isUpdatingProfile ? '保存中...' : '保存'}
+            {isUserMenuOpen && (
+              <>
+                {/* メニュー外をクリックした時に閉じるための透明な背景 */}
+                <div
+                  style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9 }}
+                  onClick={() => setIsUserMenuOpen(false)}
+                />
+                <div style={{ position: 'absolute', top: '100%', left: '0', background: 'white', border: '1px solid #ccc', borderRadius: '4px', padding: '10px', boxShadow: '0 2px 5px rgba(0,0,0,0.2)', zIndex: 10, display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '200px' }}>
+                  {isEditingProfile ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <input
+                        type="text"
+                        placeholder="表示名（任意）"
+                        value={newUsername}
+                        onChange={(e) => setNewUsername(e.target.value)}
+                        style={{ padding: '4px', fontSize: '12px', width: '100%', boxSizing: 'border-box' }}
+                      />
+                      <div style={{ display: 'flex', gap: '5px' }}>
+                        <button onClick={handleUpdateProfile} disabled={isUpdatingProfile} style={{ fontSize: '12px', padding: '4px 8px', flex: 1 }}>
+                          {isUpdatingProfile ? '保存中...' : '保存'}
+                        </button>
+                        <button onClick={() => {
+                          setIsEditingProfile(false);
+                          setNewUsername(user.user_metadata?.username || ''); // キャンセル時は元に戻す
+                        }} style={{ fontSize: '12px', padding: '4px 8px', background: '#ccc', color: '#333', flex: 1 }}>
+                          キャンセル
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <button onClick={() => { setIsEditingProfile(true); setIsEditingAccount(false); }} style={{ textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', color: '#0066cc', fontSize: '14px' }}>
+                      名前を変更する
                     </button>
-                    <button onClick={() => {
-                      setIsEditingProfile(false);
-                      setNewUsername(user.user_metadata?.username || ''); // キャンセル時は元に戻す
-                    }} style={{ fontSize: '12px', padding: '4px 8px', background: '#ccc', color: '#333', flex: 1 }}>
-                      キャンセル
+                  )}
+
+                  {isEditingAccount ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <input
+                        type="email"
+                        placeholder="新しいメールアドレス"
+                        value={newEmail}
+                        onChange={(e) => setNewEmail(e.target.value)}
+                        style={{ padding: '4px', fontSize: '12px', width: '100%', boxSizing: 'border-box' }}
+                      />
+                      <input
+                        type="password"
+                        placeholder="新しいパスワード（変更時のみ）"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        style={{ padding: '4px', fontSize: '12px', width: '100%', boxSizing: 'border-box' }}
+                      />
+                      <div style={{ display: 'flex', gap: '5px' }}>
+                        <button onClick={handleUpdateAccount} disabled={isUpdatingAccount} style={{ fontSize: '12px', padding: '4px 8px', flex: 1 }}>
+                          {isUpdatingAccount ? '保存中...' : '保存'}
+                        </button>
+                        <button onClick={() => {
+                          setIsEditingAccount(false);
+                          setNewEmail(user?.email || '');
+                          setNewPassword('');
+                        }} style={{ fontSize: '12px', padding: '4px 8px', background: '#ccc', color: '#333', flex: 1 }}>
+                          キャンセル
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <button onClick={() => { setIsEditingAccount(true); setIsEditingProfile(false); }} style={{ textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', color: '#0066cc', fontSize: '14px' }}>
+                      登録情報を変更する
                     </button>
-                  </div>
-                 </div>
-              ) : (
-                <button onClick={() => { setIsEditingProfile(true); setIsEditingAccount(false); }} style={{ textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', color: '#0066cc', fontSize: '14px' }}>
-                  名前を変更する
-                </button>
-              )}
+                  )}
 
-              {isEditingAccount ? (
-                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <input
-                    type="email"
-                    placeholder="新しいメールアドレス"
-                    value={newEmail}
-                    onChange={(e) => setNewEmail(e.target.value)}
-                    style={{ padding: '4px', fontSize: '12px', width: '100%', boxSizing: 'border-box' }}
-                  />
-                  <input
-                    type="password"
-                    placeholder="新しいパスワード（変更時のみ）"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    style={{ padding: '4px', fontSize: '12px', width: '100%', boxSizing: 'border-box' }}
-                  />
-                  <div style={{ display: 'flex', gap: '5px' }}>
-                    <button onClick={handleUpdateAccount} disabled={isUpdatingAccount} style={{ fontSize: '12px', padding: '4px 8px', flex: 1 }}>
-                      {isUpdatingAccount ? '保存中...' : '保存'}
-                    </button>
-                    <button onClick={() => {
-                      setIsEditingAccount(false);
-                      setNewEmail(user?.email || '');
-                      setNewPassword('');
-                    }} style={{ fontSize: '12px', padding: '4px 8px', background: '#ccc', color: '#333', flex: 1 }}>
-                      キャンセル
-                    </button>
-                  </div>
-                 </div>
-              ) : (
-                <button onClick={() => { setIsEditingAccount(true); setIsEditingProfile(false); }} style={{ textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', color: '#0066cc', fontSize: '14px' }}>
-                  登録情報を変更する
-                </button>
-              )}
+                  <button onClick={() => {
+                    window.location.hash = '#manage';
+                    setIsUserMenuOpen(false);
+                  }} style={{ textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', color: '#0066cc', fontSize: '14px' }}>
+                    目標データの編集
+                  </button>
 
-              <button onClick={() => {
-                window.location.hash = '#manage';
-                setIsUserMenuOpen(false);
-              }} style={{ textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', color: '#0066cc', fontSize: '14px' }}>
-                目標データの編集
-              </button>
+                  <hr style={{ margin: '5px 0', border: '0', borderTop: '1px solid #eee', width: '100%' }} />
 
-              <hr style={{ margin: '5px 0', border: '0', borderTop: '1px solid #eee', width: '100%' }} />
-
-              <button onClick={handleLogout} style={{ textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', fontSize: '14px' }}>
-                ログアウト
-              </button>
-            </div>
-            </>
-          )}
-        </div>
-      </div>
-
-      {isManaging ? (
-        <ManageGoalListScreen slot1={slot1} slot2={slot2} slot3={slot3} onSelect={(slotNum) => window.location.hash = `#edit-${slotNum}`} onBack={() => window.location.hash = ''} />
-      ) : editingSlot !== null ? (
-        <InputForm 
-          initialData={editingSlot === 1 ? slot1! : editingSlot === 2 ? slot2! : slot3!}
-          onSave={(text, inputNumber, targetType, targetValue) => {
-            const current = editingSlot === 1 ? slot1! : editingSlot === 2 ? slot2! : slot3!;
-            const updated: GoalData = { ...current, targetText: text, targetNumber: inputNumber, targetType, targetValue };
-            if (editingSlot === 1) handleSetSlot1(updated);
-            else if (editingSlot === 2) handleSetSlot2(updated);
-            else if (editingSlot === 3) handleSetSlot3(updated);
-            window.location.hash = '';
-          }}
-          onCancel={() => window.location.hash = '#manage'}
-          onDelete={() => {
-            if (editingSlot === 1) handleSetSlot1(null);
-            else if (editingSlot === 2) handleSetSlot2(null);
-            else if (editingSlot === 3) handleSetSlot3(null);
-            window.location.hash = '';
-          }}
-        />
-      ) : selectedSlot === null ? (
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ padding: '0 20px' }}>
-            <h1 style={{ fontSize: '22px', color: '#004499', marginBottom: '32px', fontWeight: '800' }}>目標データを選択</h1>
-            <DataLabel label={slot1 !== null ? `${slot1.targetText}` : "新しい目標を登録する"} onClick={() => window.location.hash = '#goal-1'} />
-            <DataLabel label={slot2 !== null ? `${slot2.targetText}` : "新しい目標を登録する"} onClick={() => window.location.hash = '#goal-2'} />
-            <DataLabel label={slot3 !== null ? `${slot3.targetText}` : "新しい目標を登録する"} onClick={() => window.location.hash = '#goal-3'} />
+                  <button onClick={handleLogout} style={{ textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', fontSize: '14px' }}>
+                    ログアウト
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
-      ) : currentGoal === null ? (
-        <InputForm 
-          onSave={(text: string, inputNumber: string, targetType: GoalType, targetValue: string) => {
-            setCurrentGoal?.({ targetText: text, targetNumber: inputNumber, targetType: targetType, targetValue: targetValue, dailyRecords: [] });
-            window.location.hash = '';
-          }} 
-          onCancel={() => window.location.hash = ''} 
-        />
-      ) : currentGoal !== null ? (
-        <ProgressScreen
-          slotId={selectedSlot!}
-          setGoal={setCurrentGoal}
-          onBack={() => window.location.hash = ''}
-          targetText={currentGoal.targetText}
-          targetNumber={currentGoal.targetNumber}
-          dailyRecords={currentGoal.dailyRecords}
-          targetType={currentGoal.targetType}
-          targetValue={currentGoal.targetValue}
-          createdAt={user.created_at}
-        />
-      ) : null}
+
+        {isManaging ? (
+          <ManageGoalListScreen slot1={slot1} slot2={slot2} slot3={slot3} onSelect={(slotNum) => window.location.hash = `#edit-${slotNum}`} onBack={() => window.location.hash = ''} />
+        ) : editingSlot !== null ? (
+          <InputForm
+            initialData={editingSlot === 1 ? slot1! : editingSlot === 2 ? slot2! : slot3!}
+            onSave={(text, inputNumber, targetType, targetValue) => {
+              const current = editingSlot === 1 ? slot1! : editingSlot === 2 ? slot2! : slot3!;
+              const updated: GoalData = { ...current, targetText: text, targetNumber: inputNumber, targetType, targetValue };
+              if (editingSlot === 1) handleSetSlot1(updated);
+              else if (editingSlot === 2) handleSetSlot2(updated);
+              else if (editingSlot === 3) handleSetSlot3(updated);
+              window.location.hash = '';
+            }}
+            onCancel={() => window.location.hash = '#manage'}
+            onDelete={() => {
+              if (editingSlot === 1) handleSetSlot1(null);
+              else if (editingSlot === 2) handleSetSlot2(null);
+              else if (editingSlot === 3) handleSetSlot3(null);
+              window.location.hash = '';
+            }}
+          />
+        ) : selectedSlot === null ? (
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ padding: '0 20px' }}>
+              <h1 style={{ fontSize: '22px', color: '#004499', marginBottom: '32px', fontWeight: '800' }}>目標データを選択</h1>
+              <DataLabel label={slot1 !== null ? `${slot1.targetText}` : "新しい目標を登録する"} onClick={() => window.location.hash = '#goal-1'} />
+              <DataLabel label={slot2 !== null ? `${slot2.targetText}` : "新しい目標を登録する"} onClick={() => window.location.hash = '#goal-2'} />
+              <DataLabel label={slot3 !== null ? `${slot3.targetText}` : "新しい目標を登録する"} onClick={() => window.location.hash = '#goal-3'} />
+            </div>
+          </div>
+        ) : currentGoal === null ? (
+          <InputForm
+            onSave={(text: string, inputNumber: string, targetType: GoalType, targetValue: string) => {
+              setCurrentGoal?.({ targetText: text, targetNumber: inputNumber, targetType: targetType, targetValue: targetValue, dailyRecords: [] });
+              window.location.hash = '';
+            }}
+            onCancel={() => window.location.hash = ''}
+          />
+        ) : currentGoal !== null ? (
+          <ProgressScreen
+            slotId={selectedSlot!}
+            setGoal={setCurrentGoal}
+            onBack={() => window.location.hash = ''}
+            targetText={currentGoal.targetText}
+            targetNumber={currentGoal.targetNumber}
+            dailyRecords={currentGoal.dailyRecords}
+            targetType={currentGoal.targetType}
+            targetValue={currentGoal.targetValue}
+            createdAt={user.created_at}
+          />
+        ) : null}
       </div>
     </div>
   );
